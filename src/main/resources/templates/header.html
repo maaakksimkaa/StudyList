@@ -1,0 +1,110 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+     th:fragment="header">
+  <head>
+    <title>Учебная Ведомость</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+      }
+
+      h2 {
+        text-align: center;
+        color: #333;
+        margin-top: 1em;
+      }
+
+      table {
+        width: 90%;
+        margin: 20px auto;
+        border-collapse: collapse;
+      }
+
+      table, th, td {
+        border: 1px solid #ddd;
+      }
+
+      th, td {
+        padding: 10px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #333;
+        color: white;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      tr:hover {
+        background-color: #ddd;
+      }
+
+      .button {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px 20px;
+        background-color: #333;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+
+      .button:hover {
+        background-color: #0056b3;
+      }
+
+      .vedomost-title {
+        margin-top: 0;
+        color: #333;
+      }
+
+      .teacher-info {
+        margin-top: 20px;
+        text-align: center;
+        color: #333;
+      }
+
+      .navigation-buttons {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+    </style>
+  </head>
+  <body>
+  <div th:if="${selectedGroupName != null and selectedSubjectName != null}">
+    <h2 class="vedomost-title" th:text="'Учебная ведомость группы ' + ${selectedGroupName} + ' по предмету ' + ${selectedSubjectName}"></h2>
+    <table th:if="${students != null and students.size() > 0}">
+      <tr>
+        <th>ФИО</th>
+        <th>Оценки</th>
+        <th>Отсутствия</th>
+        <th>Комментарий</th>
+      </tr>
+      <tr th:each="student : ${students}">
+        <td th:text="${student.FIO}"></td>
+        <td th:text="${student.grades}"></td>
+        <td th:text="${student.attendance}"></td>
+        <td th:text="${student.comments}"></td>
+      </tr>
+    </table>
+  </div>
+  <h2 class="teacher-info" th:if="${teacher != null}" th:text="'Закрепленный преподаватель: ' + ${teacher.FIO}"></h2>
+
+  <div class="navigation-buttons">
+    <a href="/records/show" class="button">Вернуться на главную</a>
+    <a th:href="@{/users/update-users(groupId=${groupId}, subjectId=${subjectId})}" class="button">Редактировать</a>
+  </div>
+
+  </body>
+</div>
+

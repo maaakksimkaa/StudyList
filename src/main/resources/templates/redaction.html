@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование данных студентов</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 1em;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        input[type="text"] {
+            width: 95%;
+            padding: 5px;
+            margin: 2px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #333;
+        }
+
+    </style>
+</head>
+<body>
+<h2>Редактирование данных студентов</h2>
+<form action="/users/update-users" method="post" th:object="${userForm}">
+    <table>
+        <tr>
+            <th>ФИО</th>
+            <th>Оценки</th>
+            <th>Отсутствия</th>
+            <th>Комментарий</th>
+        </tr>
+        <tr th:each="user, iterStat : *{users}">
+            <td><input type="hidden" th:field="*{users[__${iterStat.index}__].id}" />
+                <input type="text" th:field="*{users[__${iterStat.index}__].FIO}" /></td>
+            <td><input type="text" th:field="*{users[__${iterStat.index}__].grades}" /></td>
+            <td><input type="text" th:field="*{users[__${iterStat.index}__].attendance}" /></td>
+            <td><input type="text" th:field="*{users[__${iterStat.index}__].comments}" /></td>
+        </tr>
+    </table>
+    <!-- Добавление скрытых полей -->
+    <input type="hidden" th:field="*{groupNumber}" />
+    <input type="hidden" th:field="*{subjectNumber}" />
+    <!-- Кнопка отправки формы -->
+    <div style="text-align: center;">
+        <button type="submit" class="button">Сохранить изменения</button>
+    </div>
+</form>
+</body>
+</html>

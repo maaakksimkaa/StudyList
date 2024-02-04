@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Учебная Ведомость</title>
+    <style>
+        /* Основные стили */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 1em;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+
+        .welcome-section, .features-section {
+            background-color: #fff;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .features-section p {
+            color: #666;
+        }
+
+        /* Стили для формы */
+        .form-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .form-container label {
+            margin: 10px;
+        }
+
+        .form-container select {
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            color: #333;
+            margin: 10px;
+        }
+
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #333; /* изменен цвет кнопок */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin: 10px;
+        }
+
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Приветствие -->
+    <section class="welcome-section">
+        <h2>Добро пожаловать на сайт по контролю за успеваемостью студентов!</h2>
+        <p>Здесь вы можете выбрать группу и предмет для отображения ведомости.</p>
+    </section>
+
+    <!-- Форма -->
+    <form action="/records/list" method="get">
+        <div class="form-container">
+            <label for="groupSelect">Выберите группу:</label>
+            <select id="groupSelect" name="groupNumber">
+                <option value="">Выберите группу...</option>
+                <option th:each="group : ${groups}"
+                        th:text="${group.title}"
+                        th:value="${group.id}"></option>
+            </select>
+
+            <label for="subjectSelect">Выберите предмет:</label>
+            <select id="subjectSelect" name="subjectNumber">
+                <option value="">Выберите предмет...</option>
+                <option th:each="subject : ${subjects}"
+                        th:text="${subject.title}"
+                        th:value="${subject.id}"></option>
+            </select>
+
+            <button type="submit">Показать</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
